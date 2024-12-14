@@ -28,6 +28,7 @@ namespace PizzeriaAPI.Services
 
         public async Task<Kontakt> CreateKontakt(Kontakt kontakt)
         {
+            kontakt.DataDodania = DateTime.Now;
             _context.Kontakt.Add(kontakt);
             await _context.SaveChangesAsync();
             return kontakt;
@@ -42,7 +43,7 @@ namespace PizzeriaAPI.Services
             existingKontakt.Email = kontakt.Email;
             existingKontakt.NumerTelefonu = kontakt.NumerTelefonu;
             existingKontakt.Wiadomość = kontakt.Wiadomość;
-            existingKontakt.DataDodania = kontakt.DataDodania;
+            existingKontakt.DataDodania = DateTime.Now;
 
             await _context.SaveChangesAsync();
             return existingKontakt;

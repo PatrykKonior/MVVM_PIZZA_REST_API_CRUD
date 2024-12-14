@@ -11,5 +11,6 @@ namespace PizzeriaAPI.Services.Interfaces
         Task<Użytkownicy> CreateUżytkownik(Użytkownicy użytkownik);
         Task<Użytkownicy> UpdateUżytkownik(int id, Użytkownicy użytkownik);
         Task<bool> DeleteUżytkownik(int id);
+        Task<bool> VerifyLogin(string loginRequestLogin, string loginRequestPassword);
     }
 }

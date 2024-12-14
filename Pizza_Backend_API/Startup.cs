@@ -26,6 +26,17 @@ namespace PizzeriaAPI
             // Konfiguracja Entity Framework Core
             services.AddDbContext<PizzeriaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            // CORS policy
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
 
             // Rejestracja usług
             services.AddScoped<IMenuService, MenuService>();
@@ -49,6 +60,9 @@ namespace PizzeriaAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            // Enable CORS
+            app.UseCors("AllowAllOrigins");
 
             app.UseRouting();
 

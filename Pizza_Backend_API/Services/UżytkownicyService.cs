@@ -25,6 +25,28 @@ namespace PizzeriaAPI.Services
         {
             return await _context.Użytkownicy.FindAsync(id);
         }
+        
+        public async Task<bool> VerifyLogin(string login, string password)
+        {
+            // Znajdź użytkownika o podanym loginie
+            var user = await _context.Użytkownicy.FirstOrDefaultAsync(u => u.Login == login);
+
+            if (user == null)
+            {
+                // Użytkownik o podanym loginie nie istnieje
+                return false;
+            }
+
+            // Sprawdzenie hasła
+            if (user.HasłoHash == password)
+            {
+                // Login i hasło są poprawne
+                return true;
+            }
+
+            // Niepoprawne hasło
+            return false;
+        }
 
         public async Task<Użytkownicy> CreateUżytkownik(Użytkownicy użytkownik)
         {

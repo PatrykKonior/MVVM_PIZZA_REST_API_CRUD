@@ -31,6 +31,27 @@ namespace PizzeriaAPI.Controllers
             if (użytkownik == null) return NotFound();
             return Ok(użytkownik);
         }
+        
+        [HttpPost("login")]
+        public async Task<IActionResult> VerifyLogin([FromBody] LoginRequest loginRequest)
+        {
+            if (loginRequest == null || string.IsNullOrEmpty(loginRequest.Login) || string.IsNullOrEmpty(loginRequest.Password))
+            {
+                return BadRequest("Login i hasło są wymagane.");
+            }
+
+            var isValidUser = await _użytkownicyService.VerifyLogin(loginRequest.Login, loginRequest.Password);
+
+            if (isValidUser)
+            {
+                return Ok("Zalogowano pomyślnie!");
+            }
+            else
+            {
+                return Unauthorized("Niepoprawny login lub hasło.");
+            }
+        }
+
 
         [HttpPost]
         public async Task<ActionResult<Użytkownicy>> CreateUżytkownik(Użytkownicy użytkownik)

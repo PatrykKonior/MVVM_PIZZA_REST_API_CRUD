@@ -12,6 +12,6 @@ namespace PizzeriaAPI.Models.Entities
         public string Email { get; set; }
         public string NumerTelefonu { get; set; }
         public string Wiadomość { get; set; }
-        public DateTime DataDodania { get; set; }
+        public DateTime? DataDodania { get; set; }
     }
 }
