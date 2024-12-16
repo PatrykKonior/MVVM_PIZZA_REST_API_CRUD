@@ -23,6 +23,8 @@ namespace PizzeriaAPI
         {
             services.AddControllers();
             
+            services.AddSwaggerGen();
+            
             // Konfiguracja Entity Framework Core
             services.AddDbContext<PizzeriaContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -59,6 +61,13 @@ namespace PizzeriaAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
+                // Middleware Swaggera
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Pizzeria API v1");
+                });
             }
             
             // Enable CORS

@@ -20,7 +20,9 @@ namespace PizzeriaAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Pracownicy>>> GetAllPracownicy()
         {
+            Console.WriteLine("Wywołano GetAllPracownicy"); // Debugowanie
             var pracownicy = await _pracownicyService.GetAllPracownicy();
+            Console.WriteLine($"Znaleziono {pracownicy.Count()} pracowników"); // Sprawdzanie wyników
             return Ok(pracownicy);
         }
 
