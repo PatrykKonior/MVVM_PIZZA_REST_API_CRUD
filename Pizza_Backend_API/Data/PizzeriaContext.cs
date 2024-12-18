@@ -18,5 +18,15 @@ namespace PizzeriaAPI.Data
         public DbSet<Dostawcy> Dostawcy { get; set; }
         public DbSet<ZamówieniaFirmowe> ZamówieniaFirmowe { get; set; }
         public DbSet<Kontakt> Kontakt { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Magazyn>()
+                .HasOne(m => m.Towary) // Magazyn ma jeden Towar
+                .WithMany(t => t.Magazyn) // Towar może być w wielu magazynach
+                .HasForeignKey(m => m.TowarID); // Klucz obcy to TowarID
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

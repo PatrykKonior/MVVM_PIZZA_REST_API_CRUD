@@ -12,5 +12,8 @@ namespace PizzeriaAPI.Models.Entities
         public decimal? CenaZakupu { get; set; }
         public decimal? CenaSprzedaży { get; set; }
         public DateTime DataDodania { get; set; }
+        
+        // Relacja odwrotna (opcjonalna)
+        public ICollection<Magazyn> Magazyn { get; set; }
     }
 }

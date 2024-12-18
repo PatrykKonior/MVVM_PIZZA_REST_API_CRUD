@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PizzeriaAPI.Data;
 using PizzeriaAPI.Models.Entities;
 using PizzeriaAPI.Services.Interfaces;
+using System.Linq;
 
 namespace PizzeriaAPI.Services
 {
@@ -15,16 +16,52 @@ namespace PizzeriaAPI.Services
         {
             _context = context;
         }
-
-        public async Task<IEnumerable<Magazyn>> GetAllMagazyn()
+        
+        public async Task<IEnumerable<MagazynDto>> GetAllMagazyn()
         {
-            return await _context.Magazyn.Include(m => m.TowarID).ToListAsync();
+            return await _context.Magazyn
+                .Include(m => m.Towary) // Dołączenie danych z tabeli Towary
+                .Select(m => new MagazynDto
+                {
+                    MagazynID = m.MagazynID,
+                    TowarID = m.TowarID,
+                    NazwaTowaru = m.Towary.Nazwa,
+                    OpisTowaru = m.Towary.Opis,
+                    Ilość = m.Ilość,
+                    Lokalizacja = m.Lokalizacja
+                })
+                .ToListAsync();
+        }
+        
+        public async Task<MagazynDto> GetMagazynById(int id)
+        {
+            return await _context.Magazyn
+                .Include(m => m.Towary)
+                .Where(m => m.MagazynID == id)
+                .Select(m => new MagazynDto
+                {
+                    MagazynID = m.MagazynID,
+                    TowarID = m.TowarID,
+                    NazwaTowaru = m.Towary.Nazwa,
+                    OpisTowaru = m.Towary.Opis,
+                    Ilość = m.Ilość,
+                    Lokalizacja = m.Lokalizacja
+                })
+                .FirstOrDefaultAsync();
         }
 
-        public async Task<Magazyn> GetMagazynById(int id)
+
+        /*public async Task<IEnumerable<Magazyn>> GetAllMagazyn()
+        {
+            return await _context.Magazyn
+                .Include(m => m.Towary) // Ładowanie powiązanych danych z Towar
+                .ToListAsync();
+        }*/
+
+        /*public async Task<Magazyn> GetMagazynById(int id)
         {
             return await _context.Magazyn.FindAsync(id);
-        }
+        }*/
 
         public async Task<Magazyn> CreateMagazyn(Magazyn magazyn)
         {
