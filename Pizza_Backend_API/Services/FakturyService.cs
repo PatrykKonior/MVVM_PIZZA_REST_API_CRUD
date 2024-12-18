@@ -18,12 +18,16 @@ namespace PizzeriaAPI.Services
 
         public async Task<IEnumerable<Faktury>> GetAllFaktury()
         {
-            return await _context.Faktury.Include(f => f.ZamówienieID).ToListAsync();
+            return await _context.Faktury
+                .Include(f => f.Zamówienie) // Załaduj powiązane dane z Zamówienia
+                .ToListAsync();
         }
 
-        public async Task<Faktury> GetFakturaById(int id)
+        public async Task<Faktury?> GetFakturaById(int id)
         {
-            return await _context.Faktury.FindAsync(id);
+            return await _context.Faktury
+                .Include(f => f.Zamówienie) // Załaduj powiązane dane z Zamówienia
+                .FirstOrDefaultAsync(f => f.FakturaID == id);
         }
 
         public async Task<Faktury> CreateFaktura(Faktury faktura)

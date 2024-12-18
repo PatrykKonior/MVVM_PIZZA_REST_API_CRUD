@@ -11,5 +11,8 @@ namespace PizzeriaAPI.Models.Entities
         public DateTime DataZamówienia { get; set; }
         public string Status { get; set; }
         public decimal KwotaCałkowita { get; set; }
+        
+        // Relacja odwrotna
+        public ICollection<Faktury>? Faktury { get; set; }
     }
 }

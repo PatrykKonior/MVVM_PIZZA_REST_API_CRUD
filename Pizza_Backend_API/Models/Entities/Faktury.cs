@@ -14,5 +14,8 @@ namespace PizzeriaAPI.Models.Entities
         public decimal? KwotaNetto { get; set; }
         public decimal? VAT { get; set; }
         public decimal? KwotaBrutto { get; set; }
+        
+        // Relacja do Zamówienia
+        public Zamówienia? Zamówienie { get; set; }
     }
 }

@@ -25,6 +25,10 @@ namespace PizzeriaAPI.Data
                 .HasOne(m => m.Towary) // Magazyn ma jeden Towar
                 .WithMany(t => t.Magazyn) // Towar może być w wielu magazynach
                 .HasForeignKey(m => m.TowarID); // Klucz obcy to TowarID
+            modelBuilder.Entity<Faktury>()
+                .HasOne(f => f.Zamówienie) // Fkatura ma jedno Zamówienie
+                .WithMany(z => z.Faktury) // Zamówienie może być w wielu Fakturach
+                .HasForeignKey(f => f.ZamówienieID); // Klucz obcy to ZamówienieID
 
             base.OnModelCreating(modelBuilder);
         }

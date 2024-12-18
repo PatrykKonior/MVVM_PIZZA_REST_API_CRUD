@@ -18,18 +18,46 @@ namespace PizzeriaAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Faktury>>> GetAllFaktury()
+        public async Task<ActionResult<IEnumerable<FakturaDto>>> GetAllFaktury()
         {
             var faktury = await _fakturyService.GetAllFaktury();
-            return Ok(faktury);
+            var fakturyDto = faktury.Select(f => new FakturaDto
+            {
+                FakturaID = f.FakturaID,
+                ZamówienieID = f.ZamówienieID,
+                DataWystawienia = f.DataWystawienia,
+                WystawionaNa = f.WystawionaNa,
+                OpisDotyczy = f.OpisDotyczy,
+                KwotaNetto = f.KwotaNetto,
+                VAT = f.VAT,
+                KwotaBrutto = f.KwotaBrutto
+            });
+
+            return Ok(fakturyDto);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Faktury>> GetFakturaById(int id)
+        public async Task<ActionResult<FakturaDto>> GetFakturaById(int id)
         {
             var faktura = await _fakturyService.GetFakturaById(id);
-            if (faktura == null) return NotFound();
-            return Ok(faktura);
+            if (faktura == null)
+            {
+                return NotFound(new { message = "Faktura not found" });
+            }
+
+            var fakturaDto = new FakturaDto
+            {
+                FakturaID = faktura.FakturaID,
+                ZamówienieID = faktura.ZamówienieID,
+                DataWystawienia = faktura.DataWystawienia,
+                WystawionaNa = faktura.WystawionaNa,
+                OpisDotyczy = faktura.OpisDotyczy,
+                KwotaNetto = faktura.KwotaNetto,
+                VAT = faktura.VAT,
+                KwotaBrutto = faktura.KwotaBrutto
+            };
+
+            return Ok(fakturaDto);
         }
 
         [HttpPost]
