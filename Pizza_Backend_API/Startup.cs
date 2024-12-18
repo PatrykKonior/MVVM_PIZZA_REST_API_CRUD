@@ -52,8 +52,10 @@ namespace PizzeriaAPI
             services.AddScoped<IDostawcyService, DostawcyService>();
             services.AddScoped<IZamówieniaFirmoweService, ZamówieniaFirmoweService>();
             services.AddScoped<IKontaktService, KontaktService>();
+            services.AddScoped<ITekstyService, TekstyService>();
+            services.AddScoped<IOpinieService, OpinieService>();
 
-            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

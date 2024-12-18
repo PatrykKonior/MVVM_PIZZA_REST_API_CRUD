@@ -18,6 +18,9 @@ namespace PizzeriaAPI.Data
         public DbSet<Dostawcy> Dostawcy { get; set; }
         public DbSet<ZamówieniaFirmowe> ZamówieniaFirmowe { get; set; }
         public DbSet<Kontakt> Kontakt { get; set; }
+        public DbSet<Teksty> Teksty { get; set; }
+        public DbSet<Opinie> Opinie { get; set; }
+
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
